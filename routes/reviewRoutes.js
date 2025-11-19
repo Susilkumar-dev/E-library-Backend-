@@ -1,12 +1,11 @@
-// routes/reviewRoutes.js
 const express = require('express');
 const { protect } = require('../middleware/authMiddleware');
 const {
-  addReview,
   getBookReviews,
+  getUserReviewForBook,
+  addReview,
   updateReview,
-  deleteReview,
-  getUserReviewForBook
+  deleteReview
 } = require('../controllers/reviewController');
 
 const router = express.Router();

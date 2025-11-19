@@ -10,6 +10,7 @@ const bookRoutes = require('./routes/bookRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes');
 const borrowRequestRoutes = require('./routes/borrowRequestRoutes');
 const notificationRoutes = require('./routes/notificationRoutes'); // Add this
+const reviewRoutes = require('./routes/reviewRoutes');
 
 // Connect to database
 connectDB();
@@ -35,6 +36,7 @@ app.use('/api/books', bookRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/borrow-requests', borrowRequestRoutes);
 app.use('/api/notifications', notificationRoutes); // Add this
+app.use('/api/reviews', reviewRoutes);
 
 // Root route
 app.get('/', (req, res) => {
