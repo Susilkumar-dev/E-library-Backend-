@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const emailService = require('../utils/emailService');
 
@@ -7,17 +7,17 @@ const registerUser = async (req, res) => {
     const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Please provide name, email, and password' 
+        message: 'Please provide name, email, and password'
       });
     }
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'User already exists with this email' 
+        message: 'User already exists with this email'
       });
     }
 
@@ -59,7 +59,7 @@ const registerUser = async (req, res) => {
 
   } catch (error) {
     console.error('Register error:', error);
-    
+
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,
@@ -156,7 +156,7 @@ const loginUser = async (req, res) => {
     }
 
     const user = await User.findOne({ email }).select('+password');
-    
+
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -228,7 +228,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     const emailResult = await emailService.sendOTP(email, otp, 'reset');
-    
+
     if (!emailResult.success) {
       console.error('Email sending failed:', emailResult.error);
       return res.status(500).json({
@@ -296,7 +296,7 @@ const resetPassword = async (req, res) => {
 
   } catch (error) {
     console.error('Reset password error:', error);
-    
+
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({
@@ -315,7 +315,7 @@ const resetPassword = async (req, res) => {
 const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    
+
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -373,7 +373,7 @@ const resendOTP = async (req, res) => {
     await user.save();
 
     const emailResult = await emailService.sendOTP(email, otp, 'verification');
-    
+
     if (!emailResult.success) {
       console.error('Email sending failed:', emailResult.error);
       return res.status(500).json({
@@ -438,7 +438,7 @@ const updateProfile = async (req, res) => {
 
   } catch (error) {
     console.error('Update profile error:', error);
-    
+
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,

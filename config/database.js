@@ -6,12 +6,12 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    
+
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-    
+
     // Create default admin user if not exists
     await createDefaultAdmin();
-    
+
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
     process.exit(1);
@@ -20,9 +20,9 @@ const connectDB = async () => {
 
 const createDefaultAdmin = async () => {
   try {
-    const User = require('../models/user');
+    const User = require('../models/User');
     const adminExists = await User.findOne({ email: 'admin@elibrary.com' });
-    
+
     if (!adminExists) {
       await User.create({
         name: 'System Admin',
